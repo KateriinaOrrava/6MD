@@ -1,0 +1,328 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable function-paren-newline */
+// console.log('Ready for coding');
+// // Exercise 1,
+// // Create the Product interface based on the following example products.
+// // - type can be only "Program" or "Course"
+// // - currency can be only "USD", "HUF", "EUR"
+// //
+// // If you get stuck with the createdAt, check what is the return type of
+// // Date.parse (you can hover your mouse over it).
+// type type = 'Course' | 'Program';
+// type currency = 'USD' | 'HUF' | 'EUR';
+// export interface Product {
+//   id: number;
+//   title: string;
+//   price: string;
+//   createdAt: number;
+//   currency: currency;
+//   type: type;
+//   relatedCourses: Product[];
+// }
+
+// const products: Product[] = [
+//   {
+//     id: 4,
+//     title: 'How to Hack NASA with HTML',
+//     price: '5000.00',
+//     createdAt: Date.parse('2022-05-18T14:48:00'),
+//     currency: 'HUF',
+//     type: 'Course',
+//     relatedCourses: [],
+//   },
+//   {
+//     id: 6,
+//     title: 'Cat Grooming Masterclass',
+//     price: '10.00',
+//     createdAt: Date.parse('2022-05-19T16:00:00'),
+//     currency: 'USD',
+//     type: 'Program',
+//     relatedCourses: [
+//       {
+//         id: 11,
+//         title: 'Lying Yourself, that you are the Master',
+//         price: '0.00',
+//         createdAt: Date.parse('2022-05-18T16:00:00'),
+//         currency: 'USD',
+//         type: 'Course',
+//         relatedCourses: [],
+//       },
+//       {
+//         id: 16,
+//         title: 'Taming your cat, a life long learning',
+//         price: '0.00',
+//         createdAt: Date.parse('2022-05-17T16:00:00'),
+//         currency: 'USD',
+//         type: 'Course',
+//         relatedCourses: [],
+//       },
+//     ],
+//   },
+// ];
+
+// // // Exercise 2,
+// // // Add type annotations to the arguements and return types
+// // // of these two functions.
+
+// function filterCourses(products: Product[]): Product[] {
+//   return products.filter((product: Product) => product.type === 'Course');
+// }
+
+// function getTitles(products: Product[]): string[] {
+//   return products.map((product: Product) => product.title);
+// }
+
+// //   // Exercise 3,
+// //   // When Typescript infers correctly the types and when it is necessary
+// //   // to define them explicitly? Try to remove type annotations from the
+// //   // filterCourses and getTitles functions
+// //   // above. Hover the mouse to the variables to check the inferred types.
+// //   // When do you see "any", and when something else?
+// //   // This two functions just here to check the proper return type in the tests.
+// const courses: Product[] = filterCourses(products);
+// const titles: string[] = getTitles(products);
+
+// //   // Exercise 4,
+// //   // Can I pass a Product object to the format Price function without
+// //   // typescript error? Why?
+// //   // Spot that the inline type annotation here is different than the
+// //   // Product's type definition.
+// function formatPrice(product: { price: string; currency: string }) {
+//   return `${product.price} ${product.currency}`;
+// }
+
+// //   // passing a product to the function, for tests only.
+// const price: string = formatPrice(products[0]);
+// console.log(price);
+
+/** ******************************************************************* */
+
+//   // Exercise 1) Primitives and arrays
+
+//   // TODO: remove the "any" type, and add a concerete type for these basic primitives
+//   // How they are working, if you remove all type definitions? How inference is working here?
+
+let price: number;
+price = 100.5;
+
+let title: string;
+title = 'How to Hack NASA with HTML?';
+
+let option: boolean;
+option = true;
+
+let prices: number[];
+prices = [3, 5, 100, 3.5];
+
+let titles: string[];
+titles = ['How to Hack NASA with HTML?', 'Cat Taming Masterclass'];
+
+let options: boolean[];
+options = [true, true, false];
+console.log(title, option, prices, titles, options);
+/** ******************************************************************* */
+
+//   // Exercise 2) Any
+
+//   // Here we have a product, which type is an explicit any.
+//   // Unforunately we have here a cat instead. It is clearly seen,
+//   // that everything is accepted, typescript basically switched off.
+//   // We will got a lot of runtime errors and unexpected undefineds
+//   // here.
+
+//   // TODO: Create a proper type definition based on the usage of the product,
+//   //    correct the input data and the function usage below based on that.
+type Cat = {
+  title: string;
+  kind: string;
+  price: number;
+};
+const anyProduct: Cat = {
+  title: 'Mr. Fluff',
+  kind: 'British Shorthair',
+  price: 4,
+};
+const productTitle: string = anyProduct.title;
+const priceWithTaxes: number = anyProduct.price * 1.25;
+const upperCaseTitle: string = anyProduct.kind.toUpperCase();
+console.log(`${productTitle} , ${priceWithTaxes} , ${upperCaseTitle}`);
+
+//   // Exercise 3) Anonymus Functions
+
+//   // In JS we are putting anonymus functions to a lot of place,
+//   //  typically in the higher order functions like map. Typescript
+//   //  can figure out the anonymus functions types based on the usage.
+
+//   // TODO: correct the parameter's type of createKeysFromTitles. Spot out
+//   //  how it is changing the map function's types.
+const titelsToConvert: string[] = [
+  'How to Hack NASA with HTML?',
+  'Cat Taming Masterclass',
+];
+const createKeysFromTitles = (titlesTwo: string[]): string[] => {
+  const ans: string[] = titlesTwo.map((titleTwo) =>
+    // eslint-disable-next-line implicit-arrow-linebreak, comma-dangle
+    titleTwo.toLowerCase().replace(' ', '_').replace('?', '')
+  );
+  // eslint-disable-next-line function-paren-newline
+
+  return ans;
+};
+const keys: string[] = createKeysFromTitles(titelsToConvert);
+console.log(keys);
+/** ******************************************************************* */
+
+//   // Exercise 4) Union types
+
+//   // We have a common Course type in our codebase, unfortunately
+//   // it is not correctly typed, because some API endpoints return
+//   // the price in a string other endpoints in number format.
+
+//   // TODO: Change the Course interface to conform all possible formats.
+//   //  (Check the type errors in the usages below.)
+interface Course {
+  title: string;
+  price: number | string;
+}
+const checkoutCourse: Course = {
+  title: 'What You can Learn from Your Cat?',
+  price: 100.0,
+};
+console.log(checkoutCourse);
+const shoppingCartCourse: Course = {
+  title: 'What You can Learn from your Cat?',
+  price: '100.0',
+};
+
+//   // TODO: Ooops, after the Course interface is changed,
+//   //  something is gone wrong here. Correct the funtion body for now
+//   //  creatively, in the Narrowing chapter we will see a lot of
+//   //  patterns to handle these cases.
+const getTax = (course: Course): number => {
+  return Number(course.price) * 0.25;
+};
+console.log(getTax(shoppingCartCourse));
+/** ******************************************************************* */
+
+//   // Exercise 5) Types Aliases
+//   //
+//   // We can use type aliases with
+//   // type keyword for any annotations.
+
+//   // TODO: fill the Type Alias for the account object
+//   //  based on the example object below. Spot out
+//   //  the differences between the interface declarations.
+//   //  Note type alias can be used for any type, not just
+//   //  objects. Check the examples in the handbook.
+type Account = {
+  id: number;
+  name: string;
+  currency: string;
+};
+
+const account: Account = {
+  id: 5,
+  name: 'Awesome Account',
+  currency: 'USD',
+};
+
+const getAccountName = (account: Account): string => account.name;
+// TODO: Interesting, here we are not using the Account Type Alias,
+//  however the function is correctly typed, and accepts accounts.
+//  Why?
+const getCurrency = (account: Account): string => account.currency;
+
+const accountName: string = getAccountName(account);
+const accountCurrency: string = getCurrency(account);
+console.log(accountName);
+console.log(accountCurrency);
+
+/** ******************************************************************* */
+
+//   // Exercise 6) Type Assertions
+//   //
+//   // It is possible to tell Typescript how to
+//   // handle some data. Typically this data is
+//   // comes from the API.
+
+//   // TODO: The fetch account method just fetch a general object,
+//   //  In our application we trust in the API. Assert it to an
+//   //  Account type (declared above) to be able to use it as an Account
+//   //  in the other parts of the application.
+const fetchAccount = (
+  // eslint-disable-next-line comma-dangle
+  id: number
+): { id: number; name: string; currency: string } => ({
+  id,
+  name: 'Some Account',
+  currency: 'USD',
+});
+const currentAccount = fetchAccount(4); /* add Type Assertion here */
+const currentAccountName: string = currentAccount.name;
+console.log(currentAccountName);
+//   // Exercies 6) Literal types
+//   //
+//   // This is an important exercise. If a type is a
+//   //  concerete value like "USD" or 7, it is handled as
+//   //  a type "constant". We have already used it in the
+//   //  first chapter in the Product.type property.
+//   //  Check here the variable types and the error messages.
+//   //
+//   // https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases
+
+type USD = 'USD';
+type EUR = 'EUR';
+//   // TODO: Correct the Currency type, to accept
+//   //  both EUR and USD. How can you define two possible
+//   //  types for one type? (we have seen before
+//   //  with numbers and strings).
+type Currency = USD | EUR;
+const firstCurrency: Currency = 'USD';
+const secondCurrency: Currency = 'EUR';
+const usd: USD = firstCurrency;
+const eur: EUR = secondCurrency;
+console.log(usd, eur);
+
+//   // TODO: When corrected the Currency type, another issue come up
+//   //  later in the code.
+//   //  Check the inferred type of the someAccount variable.
+//   //  It is inferred to string, but in the getSomeCurrency
+//   //  function we using our Currency type. How add some Type
+//   //  assertion to the someAccount object to correct the later
+//   //  usage of the someAccount variable.
+//   //
+//   // https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases
+const someAccount = {
+  name: 'My Awesome Account',
+  currency: 'USD',
+};
+
+const getSomeCurrency = (accountTwo: { name: string; currency: string }) =>
+  accountTwo.currency;
+const someCurrency = getSomeCurrency(someAccount);
+console.log(someCurrency);
+//   // Exercise 7) null and undefined
+//   //
+//   // Null and undefined are interchangeable
+//   // in Javascript. In typescript it depends on
+//   // the strictNullChecks compiler options.
+//   // In this editor, and in our production code
+//   // it is switched on. Check how does it works.
+//   //
+//   // https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#null-and-undefined
+
+//   // TODO correct AccountWithOrWithoutCurrency or
+//   //  the removeCurrency function body to get rid off
+//   //  the type errors.
+type AccountWithOrWithoutCurrency = {
+  name: string;
+  currency: 'USD' | 'EUR' | undefined | null;
+};
+const removeCurrency = (
+  accountThree: AccountWithOrWithoutCurrency
+): AccountWithOrWithoutCurrency => {
+  return {
+    ...account,
+    currency: null,
+  };
+};
