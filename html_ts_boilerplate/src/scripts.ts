@@ -8,69 +8,69 @@
 // //
 // // If you get stuck with the createdAt, check what is the return type of
 // // Date.parse (you can hover your mouse over it).
-// type type = 'Course' | 'Program';
-// type currency = 'USD' | 'HUF' | 'EUR';
-// export interface Product {
-//   id: number;
-//   title: string;
-//   price: string;
-//   createdAt: number;
-//   currency: currency;
-//   type: type;
-//   relatedCourses: Product[];
-// }
+type type = 'Course' | 'Program';
+type currency = 'USD' | 'HUF' | 'EUR';
+export interface Product {
+  id: number;
+  title: string;
+  price: string;
+  createdAt: number;
+  currency: currency;
+  type: type;
+  relatedCourses: Product[];
+}
 
-// const products: Product[] = [
-//   {
-//     id: 4,
-//     title: 'How to Hack NASA with HTML',
-//     price: '5000.00',
-//     createdAt: Date.parse('2022-05-18T14:48:00'),
-//     currency: 'HUF',
-//     type: 'Course',
-//     relatedCourses: [],
-//   },
-//   {
-//     id: 6,
-//     title: 'Cat Grooming Masterclass',
-//     price: '10.00',
-//     createdAt: Date.parse('2022-05-19T16:00:00'),
-//     currency: 'USD',
-//     type: 'Program',
-//     relatedCourses: [
-//       {
-//         id: 11,
-//         title: 'Lying Yourself, that you are the Master',
-//         price: '0.00',
-//         createdAt: Date.parse('2022-05-18T16:00:00'),
-//         currency: 'USD',
-//         type: 'Course',
-//         relatedCourses: [],
-//       },
-//       {
-//         id: 16,
-//         title: 'Taming your cat, a life long learning',
-//         price: '0.00',
-//         createdAt: Date.parse('2022-05-17T16:00:00'),
-//         currency: 'USD',
-//         type: 'Course',
-//         relatedCourses: [],
-//       },
-//     ],
-//   },
-// ];
+const products: Product[] = [
+  {
+    id: 4,
+    title: 'How to Hack NASA with HTML',
+    price: '5000.00',
+    createdAt: Date.parse('2022-05-18T14:48:00'),
+    currency: 'HUF',
+    type: 'Course',
+    relatedCourses: [],
+  },
+  {
+    id: 6,
+    title: 'Cat Grooming Masterclass',
+    price: '10.00',
+    createdAt: Date.parse('2022-05-19T16:00:00'),
+    currency: 'USD',
+    type: 'Program',
+    relatedCourses: [
+      {
+        id: 11,
+        title: 'Lying Yourself, that you are the Master',
+        price: '0.00',
+        createdAt: Date.parse('2022-05-18T16:00:00'),
+        currency: 'USD',
+        type: 'Course',
+        relatedCourses: [],
+      },
+      {
+        id: 16,
+        title: 'Taming your cat, a life long learning',
+        price: '0.00',
+        createdAt: Date.parse('2022-05-17T16:00:00'),
+        currency: 'USD',
+        type: 'Course',
+        relatedCourses: [],
+      },
+    ],
+  },
+];
 
 // // // Exercise 2,
 // // // Add type annotations to the arguements and return types
 // // // of these two functions.
 
-// function filterCourses(products: Product[]): Product[] {
-//   return products.filter((product: Product) => product.type === 'Course');
-// }
+function filterCourses(prod: Product[]): Product[] {
+  return prod.filter((product: Product) => product.type === 'Course');
+}
 
-// function getTitles(products: Product[]): string[] {
-//   return products.map((product: Product) => product.title);
-// }
+function getTitles(prod: Product[]): string[] {
+  return prod.map((product: Product) => product.title);
+}
 
 // //   // Exercise 3,
 // //   // When Typescript infers correctly the types and when it is necessary
@@ -79,21 +79,21 @@
 // //   // above. Hover the mouse to the variables to check the inferred types.
 // //   // When do you see "any", and when something else?
 // //   // This two functions just here to check the proper return type in the tests.
-// const courses: Product[] = filterCourses(products);
-// const titles: string[] = getTitles(products);
+const courses: Product[] = filterCourses(products);
+const titles: string[] = getTitles(products);
 
 // //   // Exercise 4,
 // //   // Can I pass a Product object to the format Price function without
 // //   // typescript error? Why?
 // //   // Spot that the inline type annotation here is different than the
 // //   // Product's type definition.
-// function formatPrice(product: { price: string; currency: string }) {
-//   return `${product.price} ${product.currency}`;
-// }
+function formatPrice(product: { price: string; currency: string }) {
+  return `${product.price} ${product.currency}`;
+}
 
-// //   // passing a product to the function, for tests only.
-// const price: string = formatPrice(products[0]);
-// console.log(price);
+//   // passing a product to the function, for tests only.
+const price4: string = formatPrice(products[0]);
+console.log(price4);
 
 /** ******************************************************************* */
 
@@ -114,12 +114,12 @@ option = true;
 let prices: number[];
 prices = [3, 5, 100, 3.5];
 
-let titles: string[];
-titles = ['How to Hack NASA with HTML?', 'Cat Taming Masterclass'];
+let titles2: string[];
+titles2 = ['How to Hack NASA with HTML?', 'Cat Taming Masterclass'];
 
 let options: boolean[];
 options = [true, true, false];
-console.log(title, option, prices, titles, options);
+console.log(title, option, prices, titles2, options);
 /** ******************************************************************* */
 
 //   // Exercise 2) Any
@@ -226,11 +226,11 @@ const account: Account = {
   currency: 'USD',
 };
 
-const getAccountName = (account: Account): string => account.name;
+const getAccountName = (acc: Account): string => acc.name;
 // TODO: Interesting, here we are not using the Account Type Alias,
 //  however the function is correctly typed, and accepts accounts.
 //  Why?
-const getCurrency = (account: Account): string => account.currency;
+const getCurrency = (acc: Account): string => acc.currency;
 
 const accountName: string = getAccountName(account);
 const accountCurrency: string = getCurrency(account);
@@ -298,7 +298,7 @@ const someAccount = {
 };
 
 const getSomeCurrency = (accountTwo: { name: string; currency: string }) =>
-  accountTwo.currency;
+  accountTwo.currency;//?
 const someCurrency = getSomeCurrency(someAccount);
 console.log(someCurrency);
 //   // Exercise 7) null and undefined
