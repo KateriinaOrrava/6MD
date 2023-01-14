@@ -81,7 +81,7 @@ function getTitles(prod: Product[]): string[] {
 // //   // This two functions just here to check the proper return type in the tests.
 const courses: Product[] = filterCourses(products);
 const titles: string[] = getTitles(products);
-
+console.log(courses, titles);
 // //   // Exercise 4,
 // //   // Can I pass a Product object to the format Price function without
 // //   // typescript error? Why?
@@ -119,7 +119,7 @@ titles2 = ['How to Hack NASA with HTML?', 'Cat Taming Masterclass'];
 
 let options: boolean[];
 options = [true, true, false];
-console.log(title, option, prices, titles2, options);
+console.log(price, title, options, prices, titles2, options);
 /** ******************************************************************* */
 
 //   // Exercise 2) Any
@@ -249,8 +249,8 @@ console.log(accountCurrency);
 //   //  In our application we trust in the API. Assert it to an
 //   //  Account type (declared above) to be able to use it as an Account
 //   //  in the other parts of the application.
+
 const fetchAccount = (
-  // eslint-disable-next-line comma-dangle
   id: number
 ): { id: number; name: string; currency: string } => ({
   id,
@@ -298,7 +298,7 @@ const someAccount = {
 };
 
 const getSomeCurrency = (accountTwo: { name: string; currency: string }) =>
-  accountTwo.currency;//?
+  accountTwo.currency; //?
 const someCurrency = getSomeCurrency(someAccount);
 console.log(someCurrency);
 //   // Exercise 7) null and undefined
@@ -322,7 +322,7 @@ const removeCurrency = (
   accountThree: AccountWithOrWithoutCurrency
 ): AccountWithOrWithoutCurrency => {
   return {
-    ...account,
+    ...accountThree,
     currency: null,
   };
 };
